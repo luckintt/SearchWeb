@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <title>login</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background-color: #f4f4f4;
+            font-family: "楷体";
+        }
+
+        .box {
+            margin: 0 auto;
+            width: 80%;
+            max-width: 520px;
+        }
+
+        .sec {
+            display: block;
+            width: 100%;
+            margin: 100px auto;
+            background-color: #ffffff;
+            border: 1px Red solid;
+            box-shadow: 2px 2px 15px 1px rgba(200, 200, 200, 1), -2px -2px 15px 1px rgba(200, 200, 200, 1);
+        }
+
+        .marg {
+            width: 80%;
+            margin: 10px auto;
+            padding: 15px 8px;
+            box-sizing: border-box;
+        }
+
+        .pic {
+            height: 150px;
+            width: 150px;
+            display: block;
+            position: relative;
+            margin: 0px auto;
+            border-radius: 50%;
+            box-shadow: 0px 0px 2px 0px rgba(200, 200, 200, 0.8), 0px 0px 2px 0px rgba(200, 200, 200, 0.6);
+        }
+        input {
+            display: block;
+            width: 95%;
+            height: 35px;
+            margin: 5px auto;
+            outline: none;
+            font-size: 20px;
+            font-family: "楷体";
+            text-indent: 6px;
+            border-style: solid;
+            border-color: transparent;
+            border-radius: 2px;
+            background-color: #f4f4f4;
+            box-shadow: 0px 0px 2px 0px rgba(200, 200, 200, 0.8), 0px 0px 2px 0px rgba(200, 200, 200, 0.6);
+        }
+        .notice, .notice-psd{
+            display: block;
+            font-size: 18px;
+            color: #EF6080;
+            font-family: "楷体";
+            margin:10px auto;
+            /*border: 1px red solid;*/
+        }
+        .btn {
+            display: block;
+            width: 95%;
+            height: 40px;
+            margin: 10px auto;
+            font-size: 22px;
+            font-family: "楷体";
+            outline: none;
+            border: 1px rgba(66, 132, 223, 1) solid;
+            background-color: rgba(66, 132, 223, 1);
+            border-radius: 2px;
+            box-shadow: 1px 1px 5px 0px rgba(66, 132, 223, 1);
+        }
+
+        .btn:active {
+            background-color: rgba(66, 132, 223, 0.9);
+        }
+
+        a {
+            margin-top: 5px;
+            margin-bottom: 10px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .l {
+            float: left;
+        }
+
+        .r {
+            float: right;
+
+        }
+    </style>
+    <script type="text/javascript">
+        function animatein1(){
+            $('#username').animate({
+                width: "100%",
+                opacity: "0.9"
+            },250);
+        }
+        function animateout1(){
+            $('#username').animate({
+                width: "95%",
+                opacity:"1"
+            },250);
+        }
+        function animatein2(){
+            $('#password').animate({
+                width: "100%",
+                opacity: "0.9"
+            },250);
+        }
+        function animateout2(){
+            $('#password').animate({
+                width: "95%",
+                opacity:"1"
+            },250);
+        }
+    </script>
+    <script type="text/javascript">
+        function checkUser(callback){
+            var name = document.getElementById("username").value;
+            if((name.length < 5 || name.length > 25) || (name.match(/[^a-zA-Z0-9]/))){
+                $('.notice').removeAttr('style');
+                $('#username').css({'background':'#EF6070'});
+                animatein1();animateout1();
+                animatein1();animateout1();
+                return false;
+            }else{
+                $('#username').removeAttr('style');
+                $('.notice').css({'visibility':'hidden'});
+                return true;
+            }
+        }
+        function checkPasd(){
+            var pass = document.getElementById("password").value;
+            if((pass.length < 6 || pass.length > 20) && (!pass.match(/^[a-zA-Z0-9_-]{6,20}$/))){
+                $('.notice-psd').removeAttr('style');
+                $('#password').css({'background':'#EF6070'});
+                animatein2();animateout2();
+                animatein2();animateout2();
+                return false;
+            }else{
+                $('#password').removeAttr('style');
+                $('.notice-psd').css({'visibility':'hidden'});
+                return true;
+            }
+        }
+        function checkAll(){
+            if(checkUser() && checkPasd()){
+                $("#btn_login").prop("type", "submit");
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div class="box">
+    <div class="sec">
+        <form action="../login.php?type=0" method="post" onsubmit="checkUser()">
+            <div class="marg">
+                <img class="pic" width="100%" height="100%" src="img/01.jpg" />
+                <a style="visibility: hidden;" class="notice">用户名不符合要求，可以为英文大小写和数字，且长度为5-25个字符</a>
+                <input id="username" name="UserName" type="text" placeholder="请输入用户名" onblur="return checkUser();" />
+                <a style="visibility: hidden;" class="notice-psd">密码不符合要求，可以为英文大小写和数字，且长度为6-20个字符</a>
+                <input id="password" name="PassWord" type="password" placeholder="请输入密码" onfocus="clear();" onblur="return checkPasd();" />
+                <a class="l" href="merchantlogin.html">返回商家登录 ?</a>
+                <a class="r" href="./signup.html">注册帐号 ?</a>
+                <button id="btn_login" class="btn" type="button" onclick="checkAll();">用户登录</button>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" color="233, 67, 53" opacity='1' zIndex="-2" count="300" src="js/bg.js"></script>
+</div>
+</body>
+
+</html>
